@@ -2,3 +2,7 @@
 	path = detector/scaledyolov4/parent
 	url = https://github.com/mohith-sakthivel/ScaledYOLOv4.git
 	branch = detector
+[submodule "deepsort"]
+	path = tracker/deepsort/parent
+	url = https://github.com/mohith-sakthivel/deep_sort_pytorch.git
+	branch = tracker
