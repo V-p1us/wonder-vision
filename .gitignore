@@ -1,0 +1,12 @@
+# temp
+.ipynb_checkpoints
+__pycache__
+
+# local
+data
+outputs
+misc
+detector/weights
+
+# config
+.vscode

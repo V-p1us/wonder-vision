@@ -1,0 +1,4 @@
+[submodule "detector/scaledyolov4"]
+	path = detector/scaledyolov4
+	url = https://github.com/mohith-sakthivel/ScaledYOLOv4.git
+	branch = detector
