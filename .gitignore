@@ -6,7 +6,7 @@ __pycache__
 data
 outputs
 misc
-detector/weights
+detector/scaledyolov4/weights/*
 
 # config
 .vscode
