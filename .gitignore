@@ -10,3 +10,6 @@ detector/scaledyolov4/weights/*
 
 # config
 .vscode
+
+# tests
+detector/scaledyolov4/test/results
