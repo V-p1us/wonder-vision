@@ -15,7 +15,7 @@ from detector.scaledyolov4.tools import rescale_detections
 class ScaledYOLOv4(object):
     def __init__(self, cfgfile, weightfile, namesfile, img_size=640,
                  conf_thres=0.4, iou_thres=0.5, is_xywh=False,
-                 use_cuda=None, half=False):
+                 classes = None, use_cuda=None, half=False):
         # net definition
         self.net = Darknet(cfgfile, img_size)
         load_darknet_weights(self.net, weightfile)
@@ -36,6 +36,9 @@ class ScaledYOLOv4(object):
         self.num_classes = self.net.module_defs[-1]['classes']
         self.class_names = load_classes(namesfile)
         self.dtype = torch.float16 if half else torch.float32
+        self.classes =  self.active_cls_id = classes
+        if classes is not None:
+            self.active_cls_id = [i for i, item in enumerate(self.class_names) if item in classes]
 
     def __call__(self, ori_img):
         """
@@ -46,35 +49,30 @@ class ScaledYOLOv4(object):
         assert isinstance(ori_img, np.ndarray), "input must be a numpy array!"
         img, *_ = letterbox(ori_img, self.size)
         img = img.transpose(2, 0, 1)
-        img = np.ascontiguousarray(img)
         img = img.astype(np.float) / 255.
-
-        # img = cv2.resize(img, self.size).transpose(2, 0, 1)
 
          # forward
         with torch.no_grad():
             img = torch.tensor(img, device=self.device, dtype=self.dtype).unsqueeze(0)
             # Inference
-            pred = self.net(img, augment=False)[0]
+            pred = self.net(img, augment=False)[0]  # shape: (batch, n_bboxes, n_cls + 5)
             # Apply NMS
             pred = non_max_suppression(pred, self.conf_thres, self.iou_thres,
-                                       classes=None, agnostic=False)
+                                       classes=self.active_cls_id, agnostic=False)
             # Process detections
-            boxes = rescale_detections(pred, ori_img.shape, img.shape)[0].cpu()
-
-        if len(boxes) == 0:
+            boxes = rescale_detections(pred, ori_img.shape, img.shape)[0]
+        if boxes is None or len(boxes) == 0:
             bbox = torch.FloatTensor([]).reshape([0, 4])
             cls_conf = torch.FloatTensor([])
             cls_ids = torch.LongTensor([])
+            assert boxes is None    # Debug TO_REMOVE
         else:
-            height, width = ori_img.shape[:2]
-            bbox = boxes[:, :4]
+            bbox = boxes[:, :4].cpu()
             if self.is_xywh:
                 bbox = xyxy2xywh(bbox)
 
-            # bbox *= torch.FloatTensor([[width, height, width, height]])
-            cls_conf = boxes[:, -2]
-            cls_ids = boxes[:, -1].long()
+            cls_conf = boxes[:, -2].cpu()
+            cls_ids = boxes[:, -1].cpu().long()
         return bbox.numpy(), cls_conf.numpy(), cls_ids.numpy()
 
 
@@ -86,8 +84,8 @@ def demo():
                         'detector/scaledyolov4/weights/yolov4-csp.weights',
                         'detector/scaledyolov4/parent/data/coco.names')
     print("yolo.size =", yolo.size)
-    root = "detector/scaledyolov4/test"
-    resdir = os.path.join(root, "results")
+    root = "tests/scaled_yolov4"
+    resdir = os.path.join("logs/scaled_yolov4_demo/results")
     os.makedirs(resdir, exist_ok=True)
     files = [os.path.join(root, file) for file in os.listdir(root) if file.endswith('.jpg')]
     files.sort()

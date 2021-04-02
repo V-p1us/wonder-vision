@@ -3,7 +3,7 @@ from tracker.deepsort.scaled_yolov4 import ScaledYOLOv4
 __all__ = ['build_detector']
 
 
-def build_detector(cfg, use_cuda):
+def build_detector(cfg, use_cuda, enabled_classes=None):
     if cfg.ID == 'ScaledYOLOv4':
         return ScaledYOLOv4(cfgfile=cfg.CONFIG,
                             weightfile=cfg.WEIGHTS,
@@ -12,6 +12,7 @@ def build_detector(cfg, use_cuda):
                             conf_thres=cfg.CONF_THRES,
                             iou_thres=cfg.IOU_THRES,
                             is_xywh=True,
+                            classes=enabled_classes,
                             use_cuda=use_cuda,
                             half=False)
     else:
