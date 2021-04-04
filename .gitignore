@@ -2,9 +2,8 @@
 .ipynb_checkpoints
 __pycache__
 
-# local
-data
-logs
-misc
-detector/scaledyolov4/weights/*
-.vscode
+# files
+data/
+logs/
+misc/
+detector/scaled_yolov4/weights/

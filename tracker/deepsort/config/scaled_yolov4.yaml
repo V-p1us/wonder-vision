@@ -1,8 +1,8 @@
 # ScaledYOLO v4 config for detection and tracking
 ID: ScaledYOLOv4
-CONFIG: "detector/scaledyolov4/parent/models/yolov4-csp.cfg"
-WEIGHTS: "detector/scaledyolov4/weights/yolov4-csp.weights"
-CLASS_NAMES: "detector/scaledyolov4/parent/data/coco.names"
+CONFIG: "detector/scaled_yolov4/parent/models/yolov4-csp.cfg"
+WEIGHTS: "detector/scaled_yolov4/weights/yolov4-csp.weights"
+CLASS_NAMES: "detector/scaled_yolov4/parent/data/coco.names"
 
 IMG_SIZE: 640
 CONF_THRES: 0.4

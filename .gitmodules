@@ -1,5 +1,5 @@
 [submodule "scaledyolov4"]
-	path = detector/scaledyolov4/parent
+	path = detector/scaled_yolov4/parent
 	url = https://github.com/mohith-sakthivel/ScaledYOLOv4.git
 	branch = detector
 [submodule "deepsort"]

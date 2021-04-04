@@ -1,15 +1,15 @@
 import torch
 import argparse
 
-import detector.scaledyolov4.parent.detect as detect
+import detector.scaled_yolov4.parent.detect as detect
 
 
 DEFAULT_DIRS = {
-    'weights': 'detector/scaledyolov4/weights/yolov4-csp.weights',
+    'weights': 'detector/scaled_yolov4/weights/yolov4-csp.weights',
     'source': 'tests/scaled_yolov4',
     'output': 'logs/scaled_yolov4_test',
-    'cfg': 'detector/scaledyolov4/parent/models/yolov4-csp.cfg',
-    'names': 'detector/scaledyolov4/parent/data/coco.names'
+    'cfg': 'detector/scaled_yolov4/parent/models/yolov4-csp.cfg',
+    'names': 'detector/scaled_yolov4/parent/data/coco.names'
 }
 
 def custom_detect(opt):

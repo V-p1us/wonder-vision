@@ -7,7 +7,7 @@ Code repo for the challenge
 conda create -n aicity python=3.8.*
 conda activate aicity
 
-conda install pytorch==1.7.1 torchvision==0.8.2 cudatoolkit=10.1 -c pytorch
+conda install pytorch==1.7.1 torchvision==0.8.2 cudatoolkit=11.0 -c pytorch
 conda install -c conda-forge notebook
 conda install -c anaconda scipy
 ```
@@ -22,5 +22,9 @@ cd mish-cuda
 python setup.py build install
 ```
 ```
-pip install opencv-python matplotlib tqdm easydict Vizer
+pip install opencv-python matplotlib tqdm easydict Vizer PyYAML
 ```
+
+Download scaled YOLOv4 weights into detector/scaled_yolov4/weights
+
+Copy ReID model weights into tracker/deep_sort/parent/deepsort/deep/checkpoint

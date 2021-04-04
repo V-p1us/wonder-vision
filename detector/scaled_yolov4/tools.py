@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from detector.scaledyolov4.parent.utils.general import scale_coords
+from detector.scaled_yolov4.parent.utils.general import scale_coords
 
 
 def rescale_detections(pred, orig_shape, input_shape):

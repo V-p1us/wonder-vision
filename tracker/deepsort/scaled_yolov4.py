@@ -5,11 +5,11 @@ import logging
 
 import numpy as np
 
-from detector.scaledyolov4.parent.utils.datasets import letterbox
-from detector.scaledyolov4.parent.detect import load_classes
-from detector.scaledyolov4.parent.models.models import Darknet, load_darknet_weights
-from detector.scaledyolov4.parent.utils.general import non_max_suppression, xyxy2xywh
-from detector.scaledyolov4.tools import rescale_detections
+from detector.scaled_yolov4.parent.utils.datasets import letterbox
+from detector.scaled_yolov4.parent.detect import load_classes
+from detector.scaled_yolov4.parent.models.models import Darknet, load_darknet_weights
+from detector.scaled_yolov4.parent.utils.general import non_max_suppression, xyxy2xywh
+from detector.scaled_yolov4.tools import rescale_detections
 
 
 class ScaledYOLOv4(object):
@@ -19,7 +19,7 @@ class ScaledYOLOv4(object):
         # net definition
         self.net = Darknet(cfgfile, img_size)
         load_darknet_weights(self.net, weightfile)
-        logger = logging.getLogger("root.tracker.deepsort.scaledyolov4")
+        logger = logging.getLogger("root.tracker.deepsort.scaled_yolov4")
         logger.info('Loading weights from %s... Done!' % (weightfile))
         if use_cuda is None:
             use_cuda = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -80,9 +80,9 @@ def demo():
     import os
     from vizer.draw import draw_boxes
 
-    yolo = ScaledYOLOv4('detector/scaledyolov4/parent/models/yolov4-csp.cfg',
-                        'detector/scaledyolov4/weights/yolov4-csp.weights',
-                        'detector/scaledyolov4/parent/data/coco.names')
+    yolo = ScaledYOLOv4('detector/scaled_yolov4/parent/models/yolov4-csp.cfg',
+                        'detector/scaled_yolov4/weights/yolov4-csp.weights',
+                        'detector/scaled_yolov4/parent/data/coco.names')
     print("yolo.size =", yolo.size)
     root = "tests/scaled_yolov4"
     resdir = os.path.join("logs/scaled_yolov4_demo/results")
